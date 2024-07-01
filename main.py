@@ -25,6 +25,8 @@ min_confidence = 0.2
 
 model = YOLO("yolov8n.pt")
 
+
+# cap = cv2.VideoCapture("filepath.mp4")
 cap = cv2.VideoCapture(0)
 
 while cap.isOpened():
