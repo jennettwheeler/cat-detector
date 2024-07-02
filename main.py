@@ -1,14 +1,14 @@
 from cat import Cat
 from counter import Counter
+from deterrent import Deterrent
 
 import cv2
-from shapely.geometry import Polygon
-import numpy as np
 
 from ultralytics import YOLO
 
 min_confidence = 0.2
 counter = Counter("counter.json")
+deterrent = Deterrent(5)
 
 model = YOLO("yolov8n.pt")
 
@@ -35,6 +35,7 @@ while cap.isOpened():
         for cat in cats:
             on_counter = cat.on_counter(counter.to_list())
             if on_counter:
+                deterrent.try_deter(cat.centre)
                 counter_colour = (0, 0, 255)
             annotated_frame = cat.draw(annotated_frame, on_counter)
         annotated_frame = counter.draw(annotated_frame, counter_colour)
