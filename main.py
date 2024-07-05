@@ -1,3 +1,4 @@
+from LatestVideoCapture import LatestVideoCapture
 from cat import Cat
 from counter import Counter
 from deterrent import Deterrent
@@ -8,12 +9,10 @@ from ultralytics import YOLO
 
 min_confidence = 0.2
 counter = Counter("counter.json")
-deterrent = Deterrent(5)
+deterrent = Deterrent(5, ["Get off the counter!", "What are you doing! Get off!", "No, no, no!", "Get down!", "Off! Now!"])
+model = YOLO("yolov8x.pt")
 
-model = YOLO("yolov8n.pt")
-
-# cap = cv2.VideoCapture("filepath.mp4")
-cap = cv2.VideoCapture(1)
+cap = LatestVideoCapture("output_left.mp4")
 
 while cap.isOpened():
     success, frame = cap.read()
@@ -23,7 +22,7 @@ while cap.isOpened():
         for r in results:
             for box in r.boxes:
                 class_name = model.names[int(box.cls)]
-                if class_name == "person":  # Easier to test in office
+                if class_name == "cat":
                     cat = Cat(float(box.conf), box.xyxy.numpy()[0])
                     if cat.confidence > min_confidence:
                         cats.append(cat)
@@ -43,6 +42,8 @@ while cap.isOpened():
         cv2.imshow("Cat Detector", annotated_frame)
         if cv2.waitKey(1) & 0xFF == ord("q"):
             break
+    else:
+        break
 
 cap.release()
 cv2.destroyAllWindows()
