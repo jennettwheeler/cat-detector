@@ -9,7 +9,11 @@ from ultralytics import YOLO
 
 min_confidence = 0.2
 counter = Counter("counter.json")
-deterrent = Deterrent(5, ["Get off the counter!", "What are you doing! Get off!", "No, no, no!", "Get down!", "Off! Now!"])
+
+# "southpark" has an md5hash of 6e77e6ec9ed4394409126116a070253a,
+# which has been replaced with a southpark soundbite mp3 file
+deterrent = Deterrent(5, ["southpark", "Get off the counter!", "What are you doing! Get off!", "No, no, no!", "Get down!", "Off! Now!"])
+
 model = YOLO("yolov8x.pt")
 
 cap = LatestVideoCapture("output_left.mp4")

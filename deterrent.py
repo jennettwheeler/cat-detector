@@ -20,7 +20,7 @@ class Deterrent:
             self.message_files.append(filename)
 
         self.min_interval = min_interval
-        self.last_time = time.time() - min_interval
+        self.last_time = time.time() + 2 - min_interval
 
     def try_deter(self, position):
         current_time = time.time()
